@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// jobs
+model Datos {
+  id          Int      @id @default(autoincrement())
+  titulo      String
+  descripcion String
+  created_at  DateTime? @default(now()) @map("created_at")
+  updated_at  DateTime? @updatedAt @map("updated_at")
+  company_name String
+  company_image Bytes?
+  company_email String
+  job_type JobType
+  is_active Boolean @default(true)
+  tags        Json?
+  observaciones String?
+}
+// types
+enum JobType {
+  FULL_TIME
+  FREELANCE
+  TEMPORARY
+  CONTRACT
+}
+// usuarios
+model Users {
+  id         Int      @id @default(autoincrement())
+  username   String
+  email      String  @unique
+  is_admin   Boolean @default(false)
+}
+
